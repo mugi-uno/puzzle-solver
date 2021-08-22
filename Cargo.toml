@@ -1,0 +1,10 @@
+[package]
+name = "yew-sandbox"
+version = "0.1.0"
+authors = ["mugi-uno <mugi.uno@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+yew = { git = "https://github.com/yewstack/yew/" }
+enum-iterator = "0.7.0"
+colored = "2.0.0"
