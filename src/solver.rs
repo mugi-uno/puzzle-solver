@@ -83,8 +83,9 @@ fn has_clear_possibility(frame: [[i8; 8]; 8]) -> bool {
     for x in 0..8 {
       // 空白なら調査
       if new_frame[y][x] == 0 {
-        // この空白を起点とする面積が一定以下ならパターンとして不正
-        if survey_and_fill(&mut new_frame, x, y) <= 4 {
+        // この空白を起点とする面積が一定のもの以外ならパターンとして不正
+        let space_count = survey_and_fill(&mut new_frame, x, y);
+        if space_count % 5 != 0 && space_count % 5 != 4 {
           // println!("これはだめです");
           // print_frame(frame);
           return false;
