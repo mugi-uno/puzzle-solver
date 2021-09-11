@@ -59,53 +59,50 @@ impl Component for Entry {
     }
 
     html! {
-        <main class="container">
-          <h1 class="text-3xl">{ "puzzle solver" }</h1>
-          <div>
+        <main class="container md:mx-auto">
+        <h1 class="text-3xl py-8">{ "Puzzle Solver" }</h1>
             <button
               onclick=self.link.callback(|_| Msg::Solve)
-              class="border border-gray py-2 px-4"
+              class="border border-gray py-2 px-4 mb-4 rounded-sm"
             >
               { "Solve" }
             </button>
-            <hr />
-            <div>
-              {
-                for result.iter().map(|line| {
-                  html! {
-                    <div class="flex">
-                    {
-                      for line.iter().map(|cell| {
-                        html! {
-                          <div class={
-                            [
-                              match cell {
-                                1 => { "bg-[#32A2ED]" },
-                                2 => { "bg-[#24E8B6]" },
-                                3 => { "bg-[#F9F871]" },
-                                4 => { "bg-[#A4449B]" },
-                                5 => { "bg-[#265E58]" },
-                                6 => { "bg-[#002F6B]" },
-                                7 => { "bg-[#79FAC5]" },
-                                8 => { "bg-[#EF795B]" },
-                                9 => { "bg-[#E379A6]" },
-                                10 => { "bg-[#885300]" },
-                                11 => { "bg-[#FFC85B]" },
-                                12 => { "bg-[#FF49DF]" },
-                                13 => { "bg-[#EF2B2B]" },
-                                _ => { "bg-[#ffffff]" }
-                            },
-                              " border-gray border w-[20px] h-[20px] border-box mr-[1px] mb-[1px]"
-                            ].join("")
-                          }>{" "}</div>
-                        }
-                      })
-                    }
-                    </div>
+          <div>
+            {
+              for result.iter().map(|line| {
+                html! {
+                  <div class="flex">
+                  {
+                    for line.iter().map(|cell| {
+                      html! {
+                        <div class={
+                          [
+                            match cell {
+                              1 => { "bg-[#32A2ED]" },
+                              2 => { "bg-[#24E8B6]" },
+                              3 => { "bg-[#F9F871]" },
+                              4 => { "bg-[#A4449B]" },
+                              5 => { "bg-[#265E58]" },
+                              6 => { "bg-[#002F6B]" },
+                              7 => { "bg-[#79FAC5]" },
+                              8 => { "bg-[#EF795B]" },
+                              9 => { "bg-[#E379A6]" },
+                              10 => { "bg-[#885300]" },
+                              11 => { "bg-[#FFC85B]" },
+                              12 => { "bg-[#FF49DF]" },
+                              13 => { "bg-[#EF2B2B]" },
+                              _ => { "bg-[#ffffff]" }
+                          },
+                            " border-gray border w-[24px] h-[24px] border-box mr-[1px] mb-[1px]"
+                          ].join("")
+                        }>{" "}</div>
+                      }
+                    })
                   }
-                })
-              }
-            </div>
+                  </div>
+                }
+              })
+            }
           </div>
         </main>
     }
