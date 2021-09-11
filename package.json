@@ -1,0 +1,14 @@
+{
+  "name": "puzzle-solver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -o ./dist/style.css"
+  },
+  "repository": "git@github.com:mugi-uno/puzzle-solver.git",
+  "author": "mugi-uno <mugi.uno@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "tailwindcss": "^2.2.15"
+  }
+}

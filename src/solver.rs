@@ -1,6 +1,5 @@
 use colored::*;
 use enum_iterator::IntoEnumIterator;
-use std::process;
 
 #[derive(Copy, Clone, Debug, IntoEnumIterator, PartialEq)]
 enum Block {
@@ -19,7 +18,7 @@ enum Block {
   LS = 13, // 長いSみたいなやつ
 }
 
-pub fn solve() {
+pub fn solve() -> [[i8; 8]; 8] {
   let frame: [[i8; 8]; 8] = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -47,7 +46,9 @@ pub fn solve() {
     Block::LS,
   ];
 
-  dive(frame, &rest_blocks, &[]);
+  let (_, frame) = dive(frame, &rest_blocks, &[]);
+
+  return frame;
 }
 
 fn survey_and_fill(frame: &mut [[i8; 8]; 8], x: usize, y: usize) -> i8 {
@@ -154,7 +155,7 @@ fn put_block_pattern(
   return (false, frame);
 }
 
-fn dive(frame: [[i8; 8]; 8], rest_blocks: &[Block], tried_stack: &[Block]) {
+fn dive(frame: [[i8; 8]; 8], rest_blocks: &[Block], tried_stack: &[Block]) -> (bool, [[i8; 8]; 8]) {
   // 次のブロックを得る
   let block = rest_blocks[0];
 
@@ -166,14 +167,16 @@ fn dive(frame: [[i8; 8]; 8], rest_blocks: &[Block], tried_stack: &[Block]) {
       (true, new_frame) => {
         // 今置いたのが最後のブロックだった場合は優勝
         if rest_blocks.len() == 1 {
-          println!("優勝 {:?}", new_frame);
-          print_frame(frame);
-          // process::exit(0);
-          return;
+          return (true, new_frame);
         }
 
         // 次のブロックへ行ってみる
-        dive(new_frame, &rest_blocks[1..rest_blocks.len()], tried_stack);
+        match dive(new_frame, &rest_blocks[1..rest_blocks.len()], tried_stack) {
+          (true, frame) => {
+            return (true, frame);
+          }
+          (false, _) => (),
+        }
       }
       (false, _) => (),
     }
@@ -184,8 +187,16 @@ fn dive(frame: [[i8; 8]; 8], rest_blocks: &[Block], tried_stack: &[Block]) {
   if !tried_stack.contains(&block) {
     let new_rest_blocks = [&rest_blocks[1..rest_blocks.len()], &[block]].concat();
     let new_tried_stack = [tried_stack, &[block]].concat();
-    dive(frame, &new_rest_blocks, &new_tried_stack);
+
+    match dive(frame, &new_rest_blocks, &new_tried_stack) {
+      (true, frame) => {
+        return (true, frame);
+      }
+      (false, _) => (),
+    }
   }
+
+  return (false, frame);
 }
 
 fn print_frame(frame: [[i8; 8]; 8]) {
